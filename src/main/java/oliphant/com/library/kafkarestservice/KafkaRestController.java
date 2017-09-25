@@ -29,13 +29,14 @@ public class KafkaRestController {
 
     /**
      * Get a key-value pair from a KeyValue Store
-     * @param storeName   the store to look in
-     * @param key         the key to get
+     *
+     * @param storeName the store to look in
+     * @param key       the key to get
      * @return {@link KeyValue} representing the key-value pair
      */
     @RequestMapping(method = RequestMethod.GET, value = "/keyvalue/{storeName}/{key}")
     public KeyValue byKey(@PathVariable("storeName") final String storeName,
-                              @PathVariable("key") final String key) {
+                          @PathVariable("key") final String key) {
 
         // Lookup the KeyValueStore with the provided storeName
         final ReadOnlyKeyValueStore<String, Long> store = metadataService.getStreams()
@@ -54,7 +55,8 @@ public class KafkaRestController {
 
     /**
      * Get all of the key-value pairs available in a store
-     * @param storeName   store to query
+     *
+     * @param storeName store to query
      * @return A List of {@link KeyValue}s representing all of the key-values in the provided
      * store
      */
@@ -67,34 +69,36 @@ public class KafkaRestController {
 
     /**
      * Get all of the key-value pairs that have keys within the range from...to
-     * @param storeName   store to query
-     * @param from        start of the range (inclusive)
-     * @param to          end of the range (inclusive)
+     *
+     * @param storeName store to query
+     * @param from      start of the range (inclusive)
+     * @param to        end of the range (inclusive)
      * @return A List of {@link KeyValue}s representing all of the key-values in the provided
      * store that fall withing the given range.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/keyvalues/{storeName}/range/{from}/{to}")
     public List<KeyValue> keyRangeForStore(@PathVariable("storeName") final String storeName,
-                                               @PathVariable("from") final String from,
-                                               @PathVariable("to") final String to) {
+                                           @PathVariable("from") final String from,
+                                           @PathVariable("to") final String to) {
         return rangeForKeyValueStore(storeName, store -> store.range(from, to));
     }
 
     /**
      * Query a window store for key-value pairs representing the value for a provided key within a
      * range of windows
-     * @param storeName   store to query
-     * @param key         key to look for
-     * @param from        time of earliest window to query
-     * @param to          time of latest window to query
+     *
+     * @param storeName store to query
+     * @param key       key to look for
+     * @param from      time of earliest window to query
+     * @param to        time of latest window to query
      * @return A List of {@link KeyValue}s representing the key-values for the provided key
      * across the provided window range.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/windowed/{storeName}/{key}/{from}/{to}")
     public List<KeyValue> windowedByKey(@PathVariable("storeName") final String storeName,
-                                            @PathVariable("key") final String key,
-                                            @PathVariable("from") final Long from,
-                                            @PathVariable("to") final Long to) {
+                                        @PathVariable("key") final String key,
+                                        @PathVariable("from") final Long from,
+                                        @PathVariable("to") final Long to) {
 
         // Lookup the WindowStore with the provided storeName
         final ReadOnlyWindowStore<String, Long> store = metadataService.getStreams().store(storeName,
@@ -117,6 +121,7 @@ public class KafkaRestController {
 
     /**
      * Get the metadata for all of the instances of this Kafka Streams application
+     *
      * @return List of {@link HostStoreInfo}
      */
     @RequestMapping(method = RequestMethod.GET, value = "/instances")
@@ -127,8 +132,9 @@ public class KafkaRestController {
     /**
      * Get the metadata for all instances of this Kafka Streams application that currently
      * has the provided store.
-     * @param store   The store to locate
-     * @return  List of {@link HostStoreInfo}
+     *
+     * @param store The store to locate
+     * @return List of {@link HostStoreInfo}
      */
     @RequestMapping(method = RequestMethod.GET, value = "/instances/{storeName}")
     public List<HostStoreInfo> streamsMetadataForStore(@PathVariable("storeName") String store) {
@@ -138,8 +144,9 @@ public class KafkaRestController {
     /**
      * Find the metadata for the instance of     this Kafka Streams Application that has the given
      * store and would have the given key if it exists.
-     * @param store   Store to find
-     * @param key     The key to find
+     *
+     * @param store Store to find
+     * @param key   The key to find
      * @return {@link HostStoreInfo}
      */
     @RequestMapping(method = RequestMethod.GET, value = "/instance/{storeName}/{key}")
@@ -151,13 +158,14 @@ public class KafkaRestController {
     /**
      * Performs a range query on a KeyValue Store and converts the results into a List of
      * {@link KeyValue}
-     * @param storeName       The store to query
-     * @param rangeFunction   The range query to run, i.e., all, from(start, end)
-     * @return  List of {@link KeyValue}
+     *
+     * @param storeName     The store to query
+     * @param rangeFunction The range query to run, i.e., all, from(start, end)
+     * @return List of {@link KeyValue}
      */
     private List<KeyValue> rangeForKeyValueStore(final String storeName,
-                                                     final Function<ReadOnlyKeyValueStore<String, Long>,
-                                                                                                                  KeyValueIterator<String, Long>> rangeFunction) {
+                                                 final Function<ReadOnlyKeyValueStore<String, Long>,
+                                                         KeyValueIterator<String, Long>> rangeFunction) {
 
         // Get the KeyValue Store
         final ReadOnlyKeyValueStore<String, Long> store = metadataService
