@@ -7,11 +7,12 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class HostLibraryInfo {
+public class HostStoreInfo {
 
     private String host;
     private int port;
-    private Set<String> libraryNames;
+    private Set<String> storeNames;
 }
