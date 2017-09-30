@@ -1,4 +1,4 @@
-package oliphant.com.library.kafkarestservice;
+package oliphant.com.library.kafkarestservice.features.statestore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

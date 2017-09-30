@@ -1,4 +1,4 @@
-package oliphant.com.library.kafkarestservice;
+package oliphant.com.library.kafkarestservice.features.statestore;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.StringSerializer;
